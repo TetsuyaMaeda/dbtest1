@@ -5,6 +5,9 @@ use dbtest1::getall_t1;
 use dbtest1::updatename_t1;
 pub mod models;
 pub mod schema;
+
+use dbtest1::models::ST1;
+
 fn main()
  {
     println!("Hello, world!");
@@ -30,7 +33,7 @@ fn main()
     }
     
     // 更新
-    let onedata = dbtest1::models::ST1 {
+    let onedata = ST1 {
         id: 3,
         name: Some (String::from ("buhibuhi")),
     };
