@@ -62,6 +62,17 @@ pub fn getall_t1(conn: &mut MysqlConnection ) -> Vec<ST1> {
     
         result
 }
+
+pub fn updatename_t1(conn: &mut MysqlConnection,onedata:ST1 )-> usize {
+    let res =  diesel::update (schema::T1::dsl::T1.find(onedata.id))
+    .set(T1::name.eq(onedata.name.clone()))
+    .execute(conn)
+    .expect("Error updating users");
+    
+    res
+    
+
+}
 /*
 pub fn getonet_t1(conn: &mut MysqlConnection  , paramid:i32)  ->ST1 {
 

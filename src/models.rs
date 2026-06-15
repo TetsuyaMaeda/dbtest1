@@ -1,4 +1,3 @@
-
 use diesel::prelude::*;
 
 
@@ -10,8 +9,10 @@ pub struct ST1 {
 
 
 
-// insert するときに使う一時構造体の定義。なぜ別構造体が 必要なの？
+// insert するときに使う一時構造体の定義。
+
 use crate::schema::T1;
+
 #[derive(Insertable)]
 #[diesel(table_name=T1)]
 pub struct NewT1 <'a> {
