@@ -5,7 +5,7 @@ use diesel::prelude::*;
 #[derive(Queryable,Debug)]
 pub struct ST1 {
     pub id:i32,
-    pub name:String,
+    pub name: Option<String>,
 }
 
 

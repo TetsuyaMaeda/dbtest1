@@ -40,6 +40,7 @@ pub fn push_t1(conn: &mut MysqlConnection, name: &str )  /*->ST1*/  {
 pub fn getcount_t1(conn: &mut MysqlConnection ) ->i64 {
 
     let mut count_all=0;
+
     let resans =  T1::table
     .filter(T1::id.gt(0))
     .count()
@@ -52,6 +53,15 @@ pub fn getcount_t1(conn: &mut MysqlConnection ) ->i64 {
     count_all
 }
 
+pub fn getall_t1(conn: &mut MysqlConnection ) -> Vec<ST1> {
+
+        let result  = T1::table
+        .filter(T1::id.gt(0))
+        .load::<ST1>(conn)
+        .expect("Error loading tasks");
+    
+        result
+}
 /*
 pub fn getonet_t1(conn: &mut MysqlConnection  , paramid:i32)  ->ST1 {
 
