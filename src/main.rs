@@ -1,5 +1,5 @@
 use dbtest1::establish_connection;
-use dbtest1::push_t1;
+use dbtest1::insert_t1;
 use dbtest1::getcount_t1;
 use dbtest1::getall_t1;
 use dbtest1::updatename_t1;
@@ -17,14 +17,25 @@ fn main()
 
     let title="a3cde".to_string();
 
-    push_t1(connection, &title);
+    let ans = insert_t1(connection, &title);
+    match (ans) {
+        Ok(v) => println! ("insert return value={} ",v),
+        Err(a) => println! ( "insert return Error={} , a "),
+    }
+
     println!("new data add '{}' ", title );
     
     let cnt = getcount_t1(connection );
+    println!("Total data cnt ={}", cnt );
 
+    
     let all = getall_t1(connection);
+    let s = match (all) {
+        Ok(t) => t,
+        Err(a) => vec!{},
+    };
 
-    for one in all {
+    for one in s {
         match one.name {
             Some(val) =>    println! ("{}={}",one.id, val),
             None =>         println! ("{}={}",one.id, "NULL"),
