@@ -18,9 +18,9 @@ fn main()
     let title="a3cde".to_string();
 
     let ans = insert_t1(connection, &title);
-    match (ans) {
+    match ans {
         Ok(v) => println! ("insert return value={} ",v),
-        Err(a) => println! ( "insert return Error={} , a "),
+        Err(a) => println! ( "insert return Error={}" , a ),
     }
 
     println!("new data add '{}' ", title );
