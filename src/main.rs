@@ -3,6 +3,7 @@ use dbtest1::insert_t1;
 use dbtest1::getcount_t1;
 use dbtest1::getall_t1;
 use dbtest1::updatename_t1;
+use dbtest1::update_insert_t1;
 pub mod models;
 pub mod schema;
 
@@ -46,10 +47,54 @@ fn main()
     // 更新
     let onedata = ST1 {
         id: 3,
-        name: Some (String::from ("buhibuhi")),
+        name: Some (String::from ("aaauhi")),
     };
+    let targetid=onedata.id;
+    let res: Result<usize, diesel::result::Error>= updatename_t1(connection, onedata);
+    match res {
+        Ok(v) =>  {
+            if v > 0 {
+                println! ("update Success id={},result={}",targetid,v);
+            }else {
+                println! ("update may be error id={},result={}",targetid,v);
+            }
+        },
+        Err ( err ) => println! ( "update Error id={},err={}" , targetid,err),
+    }    
+
+    let onedata = ST1 {
+        id: 33,
+        name: Some (String::from ("paopaoaaauhi")),
+    };
+    let targetid=onedata.id;
+    let res: Result<usize, diesel::result::Error>= updatename_t1(connection, onedata);
+    match res {
+        Ok(v) =>  {
+            if v > 0 {
+                println! ("update Success id={},result={}",targetid,v);
+            }else {
+                println! ("update may be error id={},result={}",targetid,v);
+            }
+        },
+        Err ( err ) => println! ( "update Error id={},err={}" , targetid,err),
+    }
 
 
-    let result = updatename_t1(connection, onedata);
 
+
+    let onedata = ST1 {
+        id: 33,
+        name: Some (String::from ("aaauhi")),
+    };
+    let res: Result<usize, diesel::result::Error>= update_insert_t1(connection, onedata);
+    match res {
+        Ok(v) =>  {
+            if v > 0 {
+                println! ("update insert Success id={},result={}",targetid,v);
+            }else {
+                println! ("update insert may be error id={},result={}",targetid,v);
+            }
+        },
+        Err ( err ) => println! ( "update insert Error id={},err={}" , targetid,err),
+    }
 }

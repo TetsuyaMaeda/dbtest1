@@ -1,4 +1,4 @@
-use diesel::mysql::MysqlConnection;
+use diesel::{mysql::MysqlConnection, result::Error::InvalidCString};
 use diesel::prelude::*;
 
 
@@ -76,6 +76,29 @@ pub fn updatename_t1(conn: &mut MysqlConnection,onedata:ST1 )-> Result<usize , E
     .execute(conn);
 
     res
+} 
+pub fn update_insert_t1 ( conn:&mut MysqlConnection,onedata:ST1 ) -> Result<usize , Error> {
+
+    // onedata を updatename_t1() にパラメータ渡しすると、もう使えなくなるのでその前にコピー。
+    let optionname = onedata.name.clone();
+    let doupdate = updatename_t1( conn,onedata ) ;
+    match doupdate {
+        Ok(_v) => {
+            if _v > 0 {return doupdate}
+        }, 
+        Err(_err) => {  },
+    }        
+
+    // Err または update のAns=0のときはここに流れてくる。
+    // iniert するための文字列を、onedata.nameから取り出す。
+    let paramv = 
+        match optionname {
+            None => "".to_string(), 
+            Some(v) =>  v.clone(),
+        }
+    ;
+    let ans_insert = insert_t1 ( conn,&paramv);
+    ans_insert
 
 
 }
