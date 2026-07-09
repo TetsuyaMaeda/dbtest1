@@ -70,14 +70,14 @@ pub fn get_t1 (conn: &mut MysqlConnection,onedata:ST1 )-> Result<Vec<ST1> , Erro
 
 }
 
-pub fn updatename_t1(conn: &mut MysqlConnection,onedata:ST1 )-> Result<usize , Error> {
+pub fn updatename_t1(conn: &mut MysqlConnection,onedata: &ST1 )-> Result<usize , Error> {
     let res =  diesel::update (schema::T1::dsl::T1.find(onedata.id))
     .set(T1::name.eq(onedata.name.clone()))
     .execute(conn);
 
     res
 } 
-pub fn update_insert_t1 ( conn:&mut MysqlConnection,onedata:ST1 ) -> Result<usize , Error> {
+pub fn update_insert_t1 ( conn:&mut MysqlConnection,onedata:&ST1 ) -> Result<usize , Error> {
 
     // onedata を updatename_t1() にパラメータ渡しすると、もう使えなくなるのでその前にコピー。
     let optionname = onedata.name.clone();

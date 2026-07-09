@@ -44,57 +44,48 @@ fn main()
 
     }
     
-    // 更新
-    let onedata = ST1 {
+    // 更新 を２回。
+    // 構造体変数は、mut をつけることで、メンバーの値変更できる。
+    let mut onedata = ST1 {
         id: 3,
         name: Some (String::from ("aaauhi")),
     };
-    let targetid=onedata.id;
-    let res: Result<usize, diesel::result::Error>= updatename_t1(connection, onedata);
+    let res: Result<usize, diesel::result::Error>= updatename_t1(connection, &onedata);
     match res {
         Ok(v) =>  {
             if v > 0 {
-                println! ("update Success id={},result={}",targetid,v);
+                println! ("update Success id={},result={}",onedata.id,v);
             }else {
-                println! ("update may be error id={},result={}",targetid,v);
+                println! ("update may be error id={},result={}",onedata.id,v);
             }
         },
-        Err ( err ) => println! ( "update Error id={},err={}" , targetid,err),
+        Err ( err ) => println! ( "update Error id={},err={}" , onedata.id,err),
     }    
 
-    let onedata = ST1 {
-        id: 33,
-        name: Some (String::from ("paopaoaaauhi")),
-    };
-    let targetid=onedata.id;
-    let res: Result<usize, diesel::result::Error>= updatename_t1(connection, onedata);
+    onedata.id=33;
+    onedata.name =Some(String::from ("paopaoaaauhi"));
+
+    let res: Result<usize, diesel::result::Error>= updatename_t1(connection, &onedata);
     match res {
         Ok(v) =>  {
             if v > 0 {
-                println! ("update Success id={},result={}",targetid,v);
+                println! ("update Success id={},result={}",onedata.id,v);
             }else {
-                println! ("update may be error id={},result={}",targetid,v);
+                println! ("update may be error id={},result={}",onedata.id,v);
             }
         },
-        Err ( err ) => println! ( "update Error id={},err={}" , targetid,err),
+        Err ( err ) => println! ( "update Error id={},err={}" , onedata.id,err),
     }
 
-
-
-
-    let onedata = ST1 {
-        id: 33,
-        name: Some (String::from ("aaauhi")),
-    };
-    let res: Result<usize, diesel::result::Error>= update_insert_t1(connection, onedata);
+    let res: Result<usize, diesel::result::Error>= update_insert_t1(connection, &onedata);
     match res {
         Ok(v) =>  {
             if v > 0 {
-                println! ("update insert Success id={},result={}",targetid,v);
+                println! ("update insert Success id={},result={}",onedata.id,v);
             }else {
-                println! ("update insert may be error id={},result={}",targetid,v);
+                println! ("update insert may be error id={},result={}",onedata.id,v);
             }
         },
-        Err ( err ) => println! ( "update insert Error id={},err={}" , targetid,err),
+        Err ( err ) => println! ( "update insert Error id={},err={}" , onedata.id,err),
     }
 }
